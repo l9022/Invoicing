@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="domain">
+	<class name="Merchandise" table="merchandise">
+		<id name="id">
+			<generator class="identity" />
+		</id>
+		<property name="code">
+		   <column name="code" length="3" not-null="true">
+		     <comment>商品编号</comment>
+		   </column>
+		</property>
+		<property name="name">
+			<column name="name" length="10" not-null="true">
+				<comment>商品名称</comment>
+			</column>
+		</property>
+		<!-- <property name="price">
+			<column name="price" length="10" not-null="true">
+				<comment>单价</comment>
+			</column>
+		</property> -->
+		<property name="price" type="float">
+			<column name="price" precision="5" scale="2" not-null="true">
+				<comment>单价</comment>
+			</column>
+		</property>
+		
+		<!-- 下面是关联关系 -->
+	</class>
+</hibernate-mapping>

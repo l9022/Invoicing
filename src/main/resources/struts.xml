@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+	<constant value="spring" name="struts.objectFactory"/>
+	<constant value="false" name="struts.enable.DynamicMethodInvocation"/>
+	<constant value="true" name="struts.devMode"/>
+	
+	<!-- 告诉struts2自己不要创建action，而是向spring要 -->
+	<constant name="struts.objectFactory" value="spring" />
+	
+	<package name="default" extends="struts-default">
+		<global-results>
+			<result name="error">/error.jsp</result>
+			<result name="finish">/finish.jsp</result>
+		</global-results>
+		
+		<global-exception-mappings>
+			<exception-mapping result="error" exception="java.lang.Exception"></exception-mapping>
+		</global-exception-mappings>
+		
+		<!-- 员工管理Action配置 -->
+		<action name="employeeAction_*" class="employeeAction" method="{1}">
+			<result name="findEmployee">/moduls/archive/employee.jsp</result>
+			<result name="findEmployeeByCode">/moduls/archive/updateEmployee.jsp</result>
+		</action>
+		<!-- 商品管理Action配置 -->
+		<action name="merchandiseAction_*" class="merchandiseAction" method="{1}">
+		    <result name="findMerchandise">/moduls/archive/merchandise.jsp</result>
+		    <result name="findMerchandiseByCode">/moduls/archive/updateMerchandise.jsp</result>
+		</action>
+		<!-- 客户管理Action配置 -->
+		<action name="clientAction_*" class="clientAction" method="{1}">
+		    <result name="findClient">/moduls/archive/client.jsp</result>
+		    <result name="findClientByCode">/moduls/archive/updateClient.jsp</result>
+		</action>
+		<!-- 下面是进货有关的action -->
+		<action name="stockinAction_*" class="stockinAction" method="{1}">
+			<result name="findStockin">/moduls/archive/stockin.jsp</result>
+			<result name="prepStockin">/moduls/archive/stockin.jsp</result>
+		</action>
+	</package>
+</struts>

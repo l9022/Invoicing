@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:tx="http://www.springframework.org/schema/tx" xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+         http://www.springframework.org/schema/beans/spring-beans.xsd
+         http://www.springframework.org/schema/context
+         http://www.springframework.org/schema/context/spring-context.xsd
+         http://www.springframework.org/schema/tx 
+         http://www.springframework.org/schema/tx/spring-tx.xsd
+          http://www.springframework.org/schema/aop 
+ 	      http://www.springframework.org/schema/aop/spring-aop.xsd">
+
+	<context:property-placeholder location="classpath:data.properties" />
+
+	<bean id="ds" class="com.mchange.v2.c3p0.ComboPooledDataSource"
+		destroy-method="close">
+		<property name="driverClass" value="${jdbc.driverClassName}" />
+		<property name="jdbcUrl" value="${jdbc.url}" />
+		<property name="user" value="${jdbc.username}" />
+		<property name="password" value="${jdbc.password}" />
+	</bean>
+	
+	<!-- 在spring中创建sessionfactory -->
+	<bean id="sessionFactory"
+		class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
+		<!-- 配置数据源 -->
+		<property name="dataSource" ref="ds"></property>
+		<!-- 配置hibernate访问数据库的属性 -->
+		<property name="hibernateProperties">
+			<props>
+				<prop key="hibernate.dialect">org.hibernate.dialect.MySQL5Dialect</prop>
+				<!-- 这是前缀一定要加上hibernate,否则表不会自动创建 -->
+				<prop key="hibernate.hbm2ddl.auto">update</prop>
+				<prop key="hibernate.show_sql">true</prop>
+				<prop key="hibernate.format_sql">true</prop>
+			</props>
+		</property>
+		<!-- 配置映射文件 -->
+		<property name="mappingResources">
+			<list>
+				<value>domain/Employee.hbm.xml</value>
+				<value>domain/Merchandise.hbm.xml</value>
+				<value>domain/Client.hbm.xml</value>
+			    <value>domain/Stockin.hbm.xml</value>
+			</list>
+		</property>
+
+	</bean>
+	
+	 <!-- 员工档案配置 -->
+ 	 <bean id="employeeDao" class="dao.EmployeeDao" scope="prototype">
+ 	 	<property name="sessionFactory" ref="sessionFactory"/>
+ 	 </bean>
+ 	 <bean id="employeeService"  class="service.EmployeeService">	
+ 	 	<property name="employeeDao" ref="employeeDao"/>	
+ 	 </bean>
+ 	 <bean id="employeeAction" class="action.EmployeeAction" scope="prototype">
+  	 	<property name="employeeService" ref="employeeService"/>
+ 	 </bean>
+ 	 
+ 	 <!-- 商品档案配置 -->
+ 	 <bean id="merchandiseDao" class="dao.MerchandiseDao" scope="prototype">
+ 	 	<property name="sessionFactory" ref="sessionFactory"/>
+ 	 </bean>
+ 	 <bean id="merchandiseService"  class="service.MerchandiseService">	
+ 	 	<property name="merchandiseDao" ref="merchandiseDao"/>	
+ 	 </bean>
+ 	 <bean id="merchandiseAction" class="action.MerchandiseAction" scope="prototype">
+  	 	<property name="merchandiseService" ref="merchandiseService"/>
+ 	 </bean>
+ 	 
+ 	 <!-- 客户档案配置 -->
+ 	 <bean id="clientDao" class="dao.ClientDao" scope="prototype">
+ 	 	<property name="sessionFactory" ref="sessionFactory"/>
+ 	 </bean>
+ 	 <bean id="clientService"  class="service.ClientService">	
+ 	 	<property name="clientDao" ref="clientDao"/>	
+ 	 </bean>
+ 	 <bean id="clientAction" class="action.ClientAction" scope="prototype">
+  	 	<property name="clientService" ref="clientService"/>
+ 	 </bean>
+ 	 
+ 	 <!-- 进货单档案配置 -->
+ 	 <bean id="stockinDao" class="dao.StockinDao">
+		<property name="sessionFactory" ref="sessionFactory" />
+		<property name="merchandiseDao" ref="merchandiseDao"/>
+	</bean>
+	<bean id="stockinService" class="service.StockinService">
+		<property name="stockinDao" ref="stockinDao" />
+	</bean>
+	<bean id="stockinAction" class="action.StockinAction"
+		scope="prototype">
+		<property name="stockinService" ref="stockinService"/>
+	    <property name="merchandiseService" ref="merchandiseService"/>
+	    <property name="clientService" ref="clientService"/>
+	    <property name="employeeService" ref="employeeService"/>
+	</bean>
+ 	 
+    <!-- 配置事务对象，及切入的方式 -->
+	<bean id="txManager"
+		class="org.springframework.orm.hibernate3.HibernateTransactionManager">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+
+	<!-- 生成通知 -->
+	<tx:advice id="txAdvice" transaction-manager="txManager">
+		<tx:attributes>
+			<tx:method name="*" />
+		</tx:attributes>
+	</tx:advice>
+
+	<!-- 配置切面 -->
+	<aop:config>
+		<aop:pointcut expression="execution(* service*.*(..) )"
+			id="txPoint" />
+		<aop:advisor advice-ref="txAdvice" pointcut-ref="txPoint" />
+	</aop:config>
+    
+</beans>
