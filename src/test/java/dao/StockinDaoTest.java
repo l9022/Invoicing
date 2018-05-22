@@ -8,6 +8,7 @@ import org.junit.Test;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
+import domain.Merchandise;
 import domain.Stockin;
 
 public class StockinDaoTest {
@@ -20,6 +21,18 @@ public class StockinDaoTest {
 	    stockin.setCode("001");
 		List<Stockin> ss = stockinDao.findStockin(stockin);
 		System.out.println(ss);
+	}
+	
+	@Test
+	public void testSaveStockin() {
+		ApplicationContext context = new ClassPathXmlApplicationContext("applicationContext.xml");
+		StockinDao stockinDao = (StockinDao) context.getBean("stockinDao");
+		Stockin stockin = new Stockin();
+		Merchandise merchandise = new Merchandise();
+		merchandise.setId(1);
+		stockin.setCode("003");
+		stockin.setMerchandise(merchandise);
+		stockinDao.saveStockin(stockin);
 	}
 
 }

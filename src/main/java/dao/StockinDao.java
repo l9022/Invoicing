@@ -48,9 +48,10 @@ public class StockinDao extends HibernateDaoSupport implements IStockinDao{
 		}
 		return (List<Stockin>) this.getHibernateTemplate().findByCriteria(criteria);
 	}
+	
 	@Override
 	public void saveStockin(Stockin stockin) {
-		Merchandise merchandise=new Merchandise();
+		Merchandise merchandise = new Merchandise();
 		merchandise.setId(stockin.getMerchandise().getId());
 		stockin.setMerchandise(merchandiseDao.findMerchandise(merchandise).get(0));
 		this.getHibernateTemplate().save(stockin);

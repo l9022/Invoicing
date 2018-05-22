@@ -26,8 +26,16 @@ public class StockinAction {
 	private List<Merchandise> merchandises;// 所有商品
 	private List<Client> clients;//所有客户信息（供应商
 	private List<Employee> employees;//所有员工信息（经手人
+	
+	private String finish_Url;//用于存放action，不经过struts直接跳转页面
 	private String[] stockinid;
 	
+	public String getFinish_Url() {
+		return finish_Url;
+	}
+	public void setFinish_Url(String finish_Url) {
+		this.finish_Url = finish_Url;
+	}
 	public IClientService getClientService() {
 		return clientService;
 	}
@@ -102,8 +110,27 @@ public class StockinAction {
 	public String prepStockin() {
 		// 从数据库取出所有的商品信息
 		merchandises = merchandiseService.findMerchandise(null);
+		// 从数据库取出所有的客户信息
 		clients = clientService.findClient(null);
+		// 从数据库取出所有的员工信息
 		employees = employeeService.findEmployee(null);
 		return "prepStockin";
+	}
+	
+	public String prepSaveStockin() {
+		// 从数据库取出所有的商品信息
+		merchandises = merchandiseService.findMerchandise(null);
+		// 从数据库取出所有的客户信息
+		clients = clientService.findClient(null);
+		// 从数据库取出所有的员工信息
+		employees = employeeService.findEmployee(null);
+		return "prepSaveStockin";
+	}
+	
+	// 增加
+	public String saveStockin() {
+		this.stockinService.saveStockin(stockin);
+		finish_Url = "stockinAction_findStockin.action";
+		return "finish";
 	}
 }

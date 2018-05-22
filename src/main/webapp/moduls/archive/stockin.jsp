@@ -65,7 +65,7 @@
 		</s:select>
 		<p></p>
 		<input type="submit" value="查找"> <input type="button"
-			value="新增" onclick="redirect('<%=basePath%>stockinAction_preSaveStockin')">
+			value="新增" onclick="redirect('<%=basePath%>stockinAction_prepSaveStockin')">
 		<input type="button" value="删除" onclick="del()" />
 
 		<hr />

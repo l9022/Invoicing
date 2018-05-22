@@ -6,4 +6,6 @@ import domain.Stockin;
 
 public interface IStockinService {
 	public List<Stockin> findStockin(Stockin stockin);
+	
+	public void saveStockin(Stockin stockin);
 }

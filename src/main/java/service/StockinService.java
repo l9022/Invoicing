@@ -19,4 +19,8 @@ public class StockinService implements IStockinService{
 	public List<Stockin> findStockin(Stockin stockin) {
 		return stockinDao.findStockin(stockin);
 	}
+	@Override
+	public void saveStockin(Stockin stockin) {
+		stockinDao.saveStockin(stockin);
+	}
 }
