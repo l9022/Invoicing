@@ -34,5 +34,15 @@ public class StockinDaoTest {
 		stockin.setMerchandise(merchandise);
 		stockinDao.saveStockin(stockin);
 	}
+	
+	@Test
+	public void testFindStockinByCode() {
+		ApplicationContext context = new ClassPathXmlApplicationContext("applicationContext.xml");
+		StockinDao stockinDao=(StockinDao) context.getBean("stockinDao");
+	    Stockin stockin=new Stockin();
+	    stockin.setCode("001");
+		List<Stockin> ss = stockinDao.findStockin(stockin);
+		System.out.println(ss);
+	}
 
 }

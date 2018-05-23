@@ -87,7 +87,7 @@
 					<td><input type="checkbox" name="stockinid"
 						value='<s:property value="id" />'></td>
 					<td><a
-						href='stockinAction_updateClient?stockin.code=<s:property value="code"/>'>修改</a></td>
+						href='stockinAction_findStockinByCode?stockin.code=<s:property value="code"/>'>修改</a></td>
 					<td><s:property value="code" /></td>
 					<td><s:property value="client.name" /></td>
 					<td><s:property value="merchandise.name" /></td>

@@ -133,4 +133,22 @@ public class StockinAction {
 		finish_Url = "stockinAction_findStockin.action";
 		return "finish";
 	}
+	
+	public String findStockinByCode() {
+		// 从数据库取出所有的商品信息
+		merchandises = merchandiseService.findMerchandise(null);
+		// 从数据库取出所有的客户信息
+		clients = clientService.findClient(null);
+		// 从数据库取出所有的员工信息
+		employees = employeeService.findEmployee(null);
+		stockin = stockinService.findStockinByCode(stockin).get(0);
+		return "findStockinByCode";
+	}
+	
+	public String updateStockin() {
+		stockinService.updateStockin(stockin);
+		finish_Url = "stockinAction_findStockin.action";
+		return "finish";
+	}
+	
 }

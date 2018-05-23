@@ -23,12 +23,14 @@
 货物管理->进货单->新增
     <hr/>
     <br>
-    <s:form action="stockinAction_saveStockin" method="post" onSubmit="return checkForm()" theme="simple">
+    <s:form action="stockinAction_updateStockin" method="post" onSubmit="return checkForm()" theme="simple">
         <table align="center"   >
+        <s:hidden name="stockin.id"></s:hidden>
+		<s:hidden name="stockin.code"></s:hidden>
 			<tr>
 				<td >进货单编号</td>
 				<td>
-				    <s:textfield name="stockin.code" id="code" onblur="checkCode()"/>
+				    <s:textfield name="stockin.code" id="code" onblur="checkCode()" disabled="true"/>
 				</td>
 				<td ><span id="codeMsg"></span></td>
 			</tr>
@@ -41,11 +43,7 @@
 				<td ><span id="clientnameMsg"></span></td>
 			</tr>
 			<tr>
-				<%--
-				    .存在问题：选择货物后重新保存至数据库时，只会保存下拉列表中的第一项值
-				    .解决：是预加载中调用 merchandise 的查询方法时，查询方法并没有直接拿到id，使得默认保存第一个
-				    .但是，采用同样查询方法的 employee、client 就没有这个问题  疑惑  (・∀・(・∀・(・∀・*)
-				 --%>
+				
 				<td >货物名称</td>
 				<td >
 				    <s:select list="merchandises" name="stockin.merchandise.id"

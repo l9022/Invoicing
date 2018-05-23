@@ -56,5 +56,28 @@ public class StockinDao extends HibernateDaoSupport implements IStockinDao{
 		stockin.setMerchandise(merchandiseDao.findMerchandise(merchandise).get(0));
 		this.getHibernateTemplate().save(stockin);
 	}
+	@Override
+	public List<Stockin> findStockinByCode(Stockin stockin) {
+		DetachedCriteria criteria = DetachedCriteria.forClass(Stockin.class);
+		if (null != stockin) {
+			if (null != stockin.getCode() && stockin.getCode().trim().length() > 0) {
+				criteria.add(Restrictions.eq("code", stockin.getCode()));
+			}
+		}
+		return (List<Stockin>) this.getHibernateTemplate().findByCriteria(criteria);
+	}
+	@Override
+	public void updateStockin(Stockin stockin) {
+		Stockin s = this.getHibernateTemplate().get(Stockin.class, stockin.getId());
+		s.setCode(stockin.getCode());
+		s.setClient(stockin.getClient());
+		s.setMerchandise(stockin.getMerchandise());
+		s.setAmount(stockin.getAmount());
+		s.setPrice(stockin.getPrice());
+		s.setMoney(stockin.getMoney());
+		s.setEmployee(stockin.getEmployee());
+		s.setStockindate(stockin.getStockindate());
+		this.getHibernateTemplate().update(s);
+	}
 
 }
