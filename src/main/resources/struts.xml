@@ -39,7 +39,6 @@
 		<!-- 下面是进货有关的action -->
 		<action name="stockinAction_*" class="stockinAction" method="{1}">
 			<result name="findStockin">/moduls/archive/stockin.jsp</result>
-			<result name="prepStockin">/moduls/archive/stockin.jsp</result>
 			<result name="prepSaveStockin">/moduls/archive/saveStockin.jsp</result>
 			<result name="findStockinByCode">/moduls/archive/updateStockin.jsp</result>
 		</action>

@@ -105,17 +105,7 @@ public class StockinAction {
 		return "findStockin";
 	}
 	
-	// 预查找（货物名称、经手人、供应商等下拉列表框中的内容）
-	public String prepStockin() {
-		// 从数据库取出所有的商品信息
-		merchandises = merchandiseService.findMerchandise(null);
-		// 从数据库取出所有的客户信息
-		clients = clientService.findClient(null);
-		// 从数据库取出所有的员工信息
-		employees = employeeService.findEmployee(null);
-		return "prepStockin";
-	}
-	
+	//先从数据库取出相关信息放入到增加页面
 	public String prepSaveStockin() {
 		// 从数据库取出所有的商品信息
 		merchandises = merchandiseService.findMerchandise(null);
