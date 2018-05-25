@@ -46,30 +46,50 @@
 	<s:debug></s:debug>
 	进货管理->进货单
 	<p>
-	<form id="f1" action="stockinAction_findStockin" method="get">
-		进货单编号：<input type="text" name="stockin.code" />
-		 货物名称：
-		<s:select list="merchandises" name="stockin.merchandise.id"
-			listKey="id" listValue="name" emptyOption="true">
-		</s:select>
-
-		供应商：
-		<s:select list="clients" name="stockin.client.id"
-			listKey="id" listValue="name" emptyOption="true">
-		</s:select>
-		<p></p>
-		进货日期：<input type="text" name="stockin.stockindate" id="stockindate">
-		经手人：
-		<s:select list="employees" name="stockin.employee.id"
-			listKey="id" listValue="name" emptyOption="true">
-		</s:select>
-		<p></p>
-		<input type="submit" value="查找"> <input type="button"
-			value="新增" onclick="Jump('<%=basePath%>stockinAction_prepSaveStockin')">
-		<input type="button" value="删除" onclick="Del()" />
+	<s:form id="f1" action="stockinAction_findStockin" method="get" theme="simple">
+	    <table align="center">
+	        <tr>
+	            <td>进货单编号</td>
+	            <td><input type="text" name="stockin.code" /></td>
+	            <td>货物名称</td>
+	            <td>
+					<s:select list="merchandises" name="stockin.merchandise.id"
+						listKey="id" listValue="name" emptyOption="true">
+					</s:select>
+	            </td>
+	            <td></td>
+	            <td></td>
+	        </tr>
+	        <tr>
+	            <td>进货日期</td>
+	            <td><input type="text" name="stockin.stockindate" id="stockindate"></td>
+	            <td>供应商</td>
+	            <td>
+					<s:select list="clients" name="stockin.client.id"
+						listKey="id" listValue="name" emptyOption="true">
+					</s:select>
+	            </td>
+	            <td>经手人</td>
+	            <td>
+					<s:select list="employees" name="stockin.employee.id"
+						listKey="id" listValue="name" emptyOption="true">
+					</s:select>
+	            </td>
+	        </tr>
+	        <tr>
+	            <td colspan="2"></td>
+	            <td align="right"><input type="submit" value="查找"></td>
+	            <td align="center">
+				    <input type="button" value="新增" 
+				    onclick="Jump('<%=basePath%>stockinAction_prepSaveStockin')">
+	            </td>
+	            <td><input type="button" value="删除" onclick="Del()" /></td>
+	        </tr>
+	    </table>
+		
 
 		<hr />
-		<table border="1">
+		<table border="1" align="center">
 			<tr>
 				<th>选择</th>
 				<th>修改</th>
@@ -99,6 +119,6 @@
 				</tr>
 			</s:iterator>
 		</table>
-	</form>
+	</s:form>
 </body>
 </html>
