@@ -89,5 +89,10 @@ public class StockinDao extends HibernateDaoSupport implements IStockinDao{
 		s.setStockindate(stockin.getStockindate());
 		this.getHibernateTemplate().update(s);
 	}
+	@Override
+	public void delStockin(int stockin) {
+		this.getHibernateTemplate().
+		    delete(this.getHibernateTemplate().get(Stockin.class, stockin));
+	}
 
 }

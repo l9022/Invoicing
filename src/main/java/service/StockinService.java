@@ -31,4 +31,8 @@ public class StockinService implements IStockinService{
 	public void updateStockin(Stockin stockin) {
 		stockinDao.updateStockin(stockin);
 	}
+	@Override
+	public void delStockin(int stockin) {
+		stockinDao.delStockin(stockin);
+	}
 }

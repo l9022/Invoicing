@@ -1,7 +1,6 @@
 package action;
 
-import java.util.List;
-
+import java.util.List;import dao.StockinDao;
 import domain.Client;
 import domain.Employee;
 import domain.Merchandise;
@@ -28,7 +27,7 @@ public class StockinAction {
 	private List<Employee> employees;//所有员工信息（经手人
 	
 	private String finish_Url;//用于存放action，不经过struts直接跳转页面
-	private String[] stockinid;
+	private String[] stockinId;
 	
 	public String getFinish_Url() {
 		return finish_Url;
@@ -90,11 +89,11 @@ public class StockinAction {
 	public void setMerchandises(List<Merchandise> merchandises) {
 		this.merchandises = merchandises;
 	}
-	public String[] getStockinid() {
-		return stockinid;
+	public String[] getStockinId() {
+		return stockinId;
 	}
-	public void setStockinid(String[] stockinid) {
-		this.stockinid = stockinid;
+	public void setStockinId(String[] stockinId) {
+		this.stockinId = stockinId;
 	}
 	
 	// 查找进货单
@@ -151,4 +150,13 @@ public class StockinAction {
 		return "finish";
 	}
 	
+	public String delStockin() {
+		if(null != stockinId) {
+			for(String s:stockinId) {
+				this.stockinService.delStockin(Integer.parseInt(s));
+			}
+		}
+		finish_Url = "stockinAction_findStockin.action";
+		return "finish";
+	}
 }

@@ -17,10 +17,10 @@
 		elem : '#stockindate' //指定元素
 	});
 	
-	function redirect(url) {
+	function Jump(url) {
 		document.location = url;
 	}
-	function del() {
+	function Del() {
 		var form1 = document.getElementById("f1");
 		var es = form1.elements;//列举所有form1表单中的子元素
 		var i;
@@ -65,8 +65,8 @@
 		</s:select>
 		<p></p>
 		<input type="submit" value="查找"> <input type="button"
-			value="新增" onclick="redirect('<%=basePath%>stockinAction_prepSaveStockin')">
-		<input type="button" value="删除" onclick="del()" />
+			value="新增" onclick="Jump('<%=basePath%>stockinAction_prepSaveStockin')">
+		<input type="button" value="删除" onclick="Del()" />
 
 		<hr />
 		<table border="1">
@@ -84,7 +84,7 @@
 			</tr>
 			<s:iterator value="stockins">
 				<tr>
-					<td><input type="checkbox" name="stockinid"
+					<td><input type="checkbox" name="stockinId"
 						value='<s:property value="id" />'></td>
 					<td><a
 						href='stockinAction_findStockinByCode?stockin.code=<s:property value="code"/>'>修改</a></td>

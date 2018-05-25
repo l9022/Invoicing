@@ -2,6 +2,12 @@
     pageEncoding="utf-8"%>
 <%@taglib prefix="s" uri="/struts-tags" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<%
+	String path = request.getContextPath();
+	String basePath = request.getScheme() + "://"
+			+ request.getServerName() + ":" + request.getServerPort()
+			+ path + "/";
+%>
 <html>
 <head>
 <script>
@@ -9,11 +15,21 @@
 		document.location = url;
 	}
 	function Del() {
-		var form1=document.getElementById("f1");
+		var form1 = document.getElementById("f1");
+		var es = form1.elements;//列举所有form1表单中的子元素
+		var i;
+		for (i = 0; i < es.length; i++) {
+			if (es[i].type == "checkbox" && es[i].checked) {
+				break;
+			}
+		}
+		if (i == es.length) {
+			alert("请选择要删除的记录！！");
+		} else if (window.confirm("确定要删除所选的记录吗？")) {
 
-		if(window.confirm("确定要删除吗？")){
-			form1.action="employeeAction_delEmployee";
+			form1.action = "employeeAction_delEmployee";
 			form1.submit();
+
 		}
 	}
 </script>
@@ -31,7 +47,10 @@
 			<tr>
 			    <td></td>
 			    <td align="right"><input type="submit" value="查询"/></td>
-			    <td><input type="button" value="新增" onclick="Jump('/Invoicing/moduls/archive/saveEmployee.jsp')"/></td>
+			    <td>
+			        <input type="button" value="新增" 
+			        onclick="Jump('/Invoicing/moduls/archive/saveEmployee.jsp')"/>
+			    </td>
 			    <td><input type="button" value="删除" onclick="Del()"/></td>
 			</tr>	
 		</table>

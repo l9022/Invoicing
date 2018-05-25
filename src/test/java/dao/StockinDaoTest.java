@@ -44,5 +44,14 @@ public class StockinDaoTest {
 		List<Stockin> ss = stockinDao.findStockin(stockin);
 		System.out.println(ss);
 	}
+	
+	@Test
+	public void testdelStockin() {
+		ApplicationContext context = new ClassPathXmlApplicationContext("applicationContext.xml");
+		StockinDao stockinDao=(StockinDao) context.getBean("stockinDao");
+		int s = 7;
+		stockinDao.delStockin(s);
+		
+	}
 
 }

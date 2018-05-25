@@ -12,4 +12,6 @@ public interface IStockinService {
 	public List<Stockin> findStockinByCode(Stockin stockin);
 	
 	public void updateStockin(Stockin stockin);
+	
+	public void delStockin(int stockin);
 }
