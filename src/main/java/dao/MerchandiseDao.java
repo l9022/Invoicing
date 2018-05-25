@@ -15,7 +15,7 @@ public class MerchandiseDao extends HibernateDaoSupport implements IMerchandiseD
 	public List<Merchandise> findMerchandise(Merchandise merchandise) {
 		DetachedCriteria criteria=DetachedCriteria.forClass(Merchandise.class);
 		if(null!=merchandise){
-			if(null!=merchandise.getId()){
+			if(null != merchandise.getId()){
 				criteria.add(Restrictions.eq("id", merchandise.getId()));
 			}
 			if(null!=merchandise.getCode()&& merchandise.getCode().trim().length()>0){

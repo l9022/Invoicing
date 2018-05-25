@@ -6,19 +6,32 @@ import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 
-import domain.Merchandise;
 import domain.Stockin;
 
 public class StockinDao extends HibernateDaoSupport implements IStockinDao{
-	private MerchandiseDao merchandiseDao;
-	
-	public MerchandiseDao getMerchandiseDao() {
+	private IMerchandiseDao merchandiseDao;
+	private IClientDao clientDao;
+	private IEmployeeDao employeeDao;
+
+	public IMerchandiseDao getMerchandiseDao() {
 		return merchandiseDao;
 	}
-	public void setMerchandiseDao(MerchandiseDao merchandiseDao) {
+	public void setMerchandiseDao(IMerchandiseDao merchandiseDao) {
 		this.merchandiseDao = merchandiseDao;
 	}
-
+	public IClientDao getClientDao() {
+		return clientDao;
+	}
+	public void setClientDao(IClientDao clientDao) {
+		this.clientDao = clientDao;
+	}
+	public IEmployeeDao getEmployeeDao() {
+		return employeeDao;
+	}
+	public void setEmployeeDao(IEmployeeDao employeeDao) {
+		this.employeeDao = employeeDao;
+	}
+	
 	@Override
 	public List<Stockin> findStockin(Stockin stockin) {
 		DetachedCriteria criteria = DetachedCriteria.forClass(Stockin.class);
@@ -32,16 +45,16 @@ public class StockinDao extends HibernateDaoSupport implements IStockinDao{
 				}
 			}
 			if (null != stockin.getClient()) {
-				if (null != stockin.getClient().getName() && stockin.getClient().getName().trim().length() > 0) {
-					criteria.add(Restrictions.eq("client.name", stockin.getClient().getName()));
+				if (null != stockin.getClient().getId()) {
+					criteria.add(Restrictions.eq("client.id", stockin.getClient().getId()));
 				}
 			}
 			if (null != stockin.getStockindate() && stockin.getStockindate().trim().length() > 0) {
 				criteria.add(Restrictions.eq("stockindate", stockin.getStockindate()));
 			}
 			if (null != stockin.getEmployee()) {
-				if (null != stockin.getEmployee().getName() && stockin.getEmployee().getName().trim().length() > 0) {
-					criteria.add(Restrictions.eq("employee.name", stockin.getEmployee().getName()));
+				if (null != stockin.getEmployee().getId()) {
+					criteria.add(Restrictions.eq("employee.id", stockin.getEmployee().getId()));
 				}
 
 			}
@@ -51,9 +64,6 @@ public class StockinDao extends HibernateDaoSupport implements IStockinDao{
 	
 	@Override
 	public void saveStockin(Stockin stockin) {
-		Merchandise merchandise = new Merchandise();
-		merchandise.setId(stockin.getMerchandise().getId());
-		stockin.setMerchandise(merchandiseDao.findMerchandise(merchandise).get(0));
 		this.getHibernateTemplate().save(stockin);
 	}
 	@Override
@@ -70,12 +80,12 @@ public class StockinDao extends HibernateDaoSupport implements IStockinDao{
 	public void updateStockin(Stockin stockin) {
 		Stockin s = this.getHibernateTemplate().get(Stockin.class, stockin.getId());
 		s.setCode(stockin.getCode());
-		s.setClient(stockin.getClient());
-		s.setMerchandise(stockin.getMerchandise());
+		s.setClient(clientDao.findClient(stockin.getClient()).get(0));
+		s.setMerchandise(merchandiseDao.findMerchandise(stockin.getMerchandise()).get(0));
 		s.setAmount(stockin.getAmount());
 		s.setPrice(stockin.getPrice());
 		s.setMoney(stockin.getMoney());
-		s.setEmployee(stockin.getEmployee());
+		s.setEmployee(employeeDao.findEmployee(stockin.getEmployee()).get(0));
 		s.setStockindate(stockin.getStockindate());
 		this.getHibernateTemplate().update(s);
 	}

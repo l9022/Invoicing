@@ -16,6 +16,9 @@ public class ClientDao extends HibernateDaoSupport implements IClientDao{
 	public List<Client> findClient(Client client) {
 		DetachedCriteria criteria=DetachedCriteria.forClass(Client.class);
 		if(null != client) {
+			if(null != client.getId()){
+				criteria.add(Restrictions.eq("id", client.getId()));
+			}
 			if(null != client.getCode() && client.getCode().trim().length()>0) {
 				criteria.add(Restrictions.eq("code", client.getCode()));
 			}

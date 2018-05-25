@@ -18,6 +18,9 @@ public class EmployeeDao extends HibernateDaoSupport implements IEmployeeDao{
 	public List<Employee> findEmployee(Employee employee) {
 		DetachedCriteria criteria=DetachedCriteria.forClass(Employee.class);
 		if(null != employee) {
+			if(null != employee.getId()){
+				criteria.add(Restrictions.eq("id", employee.getId()));
+			}
 			if(null != employee.getCode() && employee.getCode().trim().length()>0) {
 				criteria.add(Restrictions.eq("code", employee.getCode()));
 			}
