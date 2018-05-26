@@ -86,6 +86,8 @@
  	 <bean id="stockinDao" class="dao.StockinDao">
 		<property name="sessionFactory" ref="sessionFactory" />
 		<property name="merchandiseDao" ref="merchandiseDao"/>
+		<property name="clientDao" ref="clientDao"/>
+		<property name="employeeDao" ref="employeeDao"/>
 	</bean>
 	<bean id="stockinService" class="service.StockinService">
 		<property name="stockinDao" ref="stockinDao" />

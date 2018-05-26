@@ -19,5 +19,21 @@ public class StockorderService implements IStockorderService{
 	public List<Stockorder> findStockorder(Stockorder stockorder) {
 		return stockorderDao.findStockorder(stockorder);
 	}
+	@Override
+	public void saveStockorder(Stockorder stockorder) {
+		stockorderDao.saveStockorder(stockorder);
+	}
+	@Override
+	public List<Stockorder> findStockorderByCode(Stockorder stockorder) {
+		return stockorderDao.findStockorderByCode(stockorder);
+	}
+	@Override
+	public void updateStockorder(Stockorder stockorder) {
+		stockorderDao.updateStockorder(stockorder);
+	}
+	@Override
+	public void delStockorder(int stockorder) {
+		stockorderDao.delStockorder(stockorder);
+	}
 
 }

@@ -27,7 +27,7 @@ public class StockorderAction {
 	private List<Client> clients;//所有客户信息（供应商
 	private List<Employee> employees;//所有员工信息（经手人 
 	
-	private String finish_url;
+	private String finish_Url;
 	private String[] stockorderId;
 	
 	public Stockorder getStockorder() {
@@ -84,11 +84,11 @@ public class StockorderAction {
 	public void setEmployees(List<Employee> employees) {
 		this.employees = employees;
 	}
-	public String getFinish_url() {
-		return finish_url;
+	public String getFinish_Url() {
+		return finish_Url;
 	}
-	public void setFinish_url(String finish_url) {
-		this.finish_url = finish_url;
+	public void setFinish_Url(String finish_Url) {
+		this.finish_Url = finish_Url;
 	}
 	public String[] getStockorderId() {
 		return stockorderId;
@@ -105,4 +105,48 @@ public class StockorderAction {
 		return "findStockorder";
 	}
 	
+	//先从数据库取出相关信息放入到增加页面
+	public String prepSaveStockorder() {
+		// 从数据库取出所有的商品信息
+		merchandises = merchandiseService.findMerchandise(null);
+		// 从数据库取出所有的客户信息
+		clients = clientService.findClient(null);
+		// 从数据库取出所有的员工信息
+		employees = employeeService.findEmployee(null);
+		return "prepSaveStockorder";
+	}
+	
+	// 增加
+	public String saveStockorder() {
+		this.stockorderService.saveStockorder(stockorder);
+		finish_Url = "stockorderAction_findStockorder.action";
+		return "finish";
+	}
+	
+	public String findStockorderByCode() {
+		// 从数据库取出所有的商品信息
+		merchandises = merchandiseService.findMerchandise(null);
+		// 从数据库取出所有的客户信息
+		clients = clientService.findClient(null);
+		// 从数据库取出所有的员工信息
+		employees = employeeService.findEmployee(null);
+		stockorder = stockorderService.findStockorderByCode(stockorder).get(0);
+		return "findStockorderByCode";
+	}
+	
+	public String updateStockorder() {
+		stockorderService.updateStockorder(stockorder);
+		finish_Url = "stockorderAction_findStockorder.action";
+		return "finish";
+	}
+	
+	public String delStockorder() {
+		if(null != stockorderId) {
+			for(String s:stockorderId) {
+				this.stockorderService.delStockorder(Integer.parseInt(s));
+			}
+		}
+		finish_Url = "stockorderAction_findStockorder.action";
+		return "finish";
+	}
 }
