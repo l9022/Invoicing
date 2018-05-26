@@ -42,7 +42,8 @@
 				<value>domain/Employee.hbm.xml</value>
 				<value>domain/Merchandise.hbm.xml</value>
 				<value>domain/Client.hbm.xml</value>
-			    <value>domain/Stockin.hbm.xml</value>
+			    <value>domain/Stockin.hbm.xml</value> 
+			    <value>domain/Stockorder.hbm.xml</value>
 			</list>
 		</property>
 
@@ -96,6 +97,26 @@
 	    <property name="clientService" ref="clientService"/>
 	    <property name="employeeService" ref="employeeService"/>
 	</bean>
+	
+	
+ 	 <!-- 订单档案配置 -->
+ 	 <bean id="stockorderDao" class="dao.StockorderDao">
+		<property name="sessionFactory" ref="sessionFactory" />
+		<property name="merchandiseDao" ref="merchandiseDao"/>
+		<property name="clientDao" ref="clientDao"/>
+		<property name="employeeDao" ref="employeeDao"/>
+	</bean>
+	<bean id="stockorderService" class="service.StockorderService">
+	    <property name="stockorderDao" ref="stockorderDao"/>
+	</bean>
+	<bean id="stockorderAction" class="action.StockorderAction" 
+	    scope="prototype">
+	    <property name="stockorderService" ref="stockorderService"/>
+	    <property name="merchandiseService" ref="merchandiseService"/>
+	    <property name="clientService" ref="clientService"/>
+	    <property name="employeeService" ref="employeeService"/>
+	</bean>
+	
  	 
     <!-- 配置事务对象，及切入的方式 -->
 	<bean id="txManager"

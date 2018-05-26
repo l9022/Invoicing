@@ -42,5 +42,11 @@
 			<result name="prepSaveStockin">/moduls/archive/saveStockin.jsp</result>
 			<result name="findStockinByCode">/moduls/archive/updateStockin.jsp</result>
 		</action>
+		<!-- 下面是订单有关的action -->
+		<action name="stockorderAction_*" class="stockorderAction" method="{1}">
+			<result name="findStockorder">/moduls/archive/stockorder.jsp</result>
+			<result name="prepSaveStockorder">/moduls/archive/saveStockorder.jsp</result>
+			<result name="findStockorderByCode">/moduls/archive/updateStockorder.jsp</result>
+		</action>
 	</package>
 </struts>

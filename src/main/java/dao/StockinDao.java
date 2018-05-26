@@ -49,14 +49,14 @@ public class StockinDao extends HibernateDaoSupport implements IStockinDao{
 					criteria.add(Restrictions.eq("client.id", stockin.getClient().getId()));
 				}
 			}
-			if (null != stockin.getStockindate() && stockin.getStockindate().trim().length() > 0) {
-				criteria.add(Restrictions.eq("stockindate", stockin.getStockindate()));
-			}
 			if (null != stockin.getEmployee()) {
 				if (null != stockin.getEmployee().getId()) {
 					criteria.add(Restrictions.eq("employee.id", stockin.getEmployee().getId()));
 				}
-
+				
+			}
+			if (null != stockin.getStockindate() && stockin.getStockindate().trim().length() > 0) {
+				criteria.add(Restrictions.eq("stockindate", stockin.getStockindate()));
 			}
 		}
 		return (List<Stockin>) this.getHibernateTemplate().findByCriteria(criteria);
